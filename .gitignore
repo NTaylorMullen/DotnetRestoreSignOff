@@ -30,3 +30,4 @@ project.lock.json
 *.ipch
 .build/
 node_modules/
+.dotnet/

@@ -16,11 +16,14 @@ var base = {
 	}
 };
 
-var packageSets = [{
-	"Microsoft.Extensions.DependencyInjection": "1.0.0-*"
-}, {
-	"Microsoft.AspNetCore.Mvc": "1.0.0-*"
-}, ];
+var packageSets = [
+	{
+		"Microsoft.Extensions.DependencyInjection": "1.0.0-*"
+	},
+	{
+		"Microsoft.AspNetCore.Mvc": "1.0.0-*"
+	}
+];
 
 var frameworks = [
 	["net451"],
