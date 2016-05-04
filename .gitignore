@@ -31,3 +31,5 @@ project.lock.json
 .build/
 node_modules/
 .dotnet/
+.vs/
+.vscode/

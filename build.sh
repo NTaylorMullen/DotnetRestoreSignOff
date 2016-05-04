@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 echo "Generating project.json files"
-node gen.js
+npm start
 
 dotnet="$(pwd)/.dotnet/dotnet"
 
