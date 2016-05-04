@@ -22,7 +22,7 @@ function createProjects(name, dependencies, frameworkSets, imports, tools) {
 		}
 
 		// js version of string.Join('.', tfms)
-		var folderName = name + '-' + tfms.reduce((all, sum) => all + "." + sum);
+		var folderName = name + '-' + tfms.reduce((all, sum) => all + "." + sum).substring(0, 20);
 
 		// make aritfact dir
 		var dir = path.join("artifacts", name, folderName);
@@ -66,7 +66,7 @@ function makeXproj(projectPath) {
 	fs.writeFileSync(
 		projectPath,
 		xprojTemplate.replace('$guid', g));
-
+    
 	solution.projects[dirname] = { name: dirname, path: path.resolve(projectPath), guid: g };
 }
 
