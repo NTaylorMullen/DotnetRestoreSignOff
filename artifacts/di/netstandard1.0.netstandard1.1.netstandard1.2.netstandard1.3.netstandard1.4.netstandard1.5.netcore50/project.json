@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*"
+  },
+  "tools": {},
+  "frameworks": {
+    "netstandard1.0": {},
+    "netstandard1.1": {},
+    "netstandard1.2": {},
+    "netstandard1.3": {},
+    "netstandard1.4": {},
+    "netstandard1.5": {},
+    "netcore50": {}
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "type": "build",
+      "version": "1.0.0-*"
+    }
+  },
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "imports": "portable-net451+win8",
+      "version": "1.0.0-*"
+    }
+  },
+  "frameworks": {
+    "netcore50": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

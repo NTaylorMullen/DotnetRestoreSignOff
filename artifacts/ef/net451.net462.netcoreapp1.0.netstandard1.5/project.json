@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "Microsoft.EntityFrameworkCore.Sqlite": "1.0.0-*",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-*"
+  },
+  "tools": {},
+  "frameworks": {
+    "net451": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    },
+    "net462": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    },
+    "netcoreapp1.0": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    },
+    "netstandard1.5": {
+      "imports": [
+        "portable-net451+win8"
+      ]
+    }
+  }
+}

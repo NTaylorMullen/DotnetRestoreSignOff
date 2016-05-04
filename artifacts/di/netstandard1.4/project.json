@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*"
+  },
+  "tools": {},
+  "frameworks": {
+    "netstandard1.4": {}
+  }
+}

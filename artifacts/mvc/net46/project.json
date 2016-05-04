@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "Microsoft.AspNetCore.Mvc": "1.0.0-*"
+  },
+  "tools": {},
+  "frameworks": {
+    "net46": {
+      "imports": [
+        "portable-dnxcore50+net45+win8+wp8+wpa81"
+      ]
+    }
+  }
+}
