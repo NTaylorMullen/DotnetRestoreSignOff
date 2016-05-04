@@ -45,16 +45,18 @@ gulp.task('clean', function(done) {
 
 gulp.task('di', ['clean'], function() {
 	var frameworks = [
-		["net451"],
-		["net46"],
-		["net462"],
-		["netcoreapp1.0"],
+		["netstandard1.0"],
+		["netstandard1.1"],
+		["netstandard1.2"],
+		["netstandard1.3"],
+		["netstandard1.4"],
 		["netstandard1.5"],
 		["netcore50"],
-		["net451", "net462", "netcoreapp1.0", "netstandard1.5"]
+		["netstandard1.0", "netstandard1.1", "netstandard1.2", "netstandard1.3", "netstandard1.4", "netstandard1.5", "netcore50"]
 	];
+
 	var deps = {
-		"Microsoft.Extensions.DependencyInjection": "1.0.0-*"
+		"Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*"
 	};
 	createProjects('di', deps, frameworks);
 });
