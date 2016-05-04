@@ -5,7 +5,8 @@ var fs = require('fs'),
 	mkdirp = require('mkdirp'),
 	extend = require('extend'),
 	rimraf = require('rimraf'),
-	gulp = require('gulp');
+	gulp = require('gulp'),
+	Guid = require('guid');
 
 function createProjects(name, dependencies, frameworkSets, imports, tools) {
 	for (let tfms of frameworkSets) {
@@ -21,7 +22,7 @@ function createProjects(name, dependencies, frameworkSets, imports, tools) {
 		}
 
 		// js version of string.Join('.', tfms)
-		var folderName = tfms.reduce((all, sum) => all + "." + sum);
+		var folderName = name + '-' + tfms.reduce((all, sum) => all + "." + sum);
 
 		// make aritfact dir
 		var dir = path.join("artifacts", name, folderName);
@@ -47,14 +48,70 @@ function createProjects(name, dependencies, frameworkSets, imports, tools) {
 		}
 
 		fs.writeFileSync(dest, JSON.stringify(project, null, 2));
+		makeXproj(dest);
 	}
+	writeSolution(solution, 'artifacts/all-gen.sln');
 }
 
-gulp.task('clean', function(done) {
+var solution = {
+	projects: {}
+};
+
+var xprojTemplate = fs.readFileSync('./xproj.txt').toString();
+
+function makeXproj(projectPath) {
+	var dirname = path.basename(path.dirname(projectPath));
+	var projectPath = path.join(path.dirname(projectPath), dirname + '.xproj');
+	var g = Guid.raw().toUpperCase();
+	fs.writeFileSync(
+		projectPath,
+		xprojTemplate.replace('$guid', g));
+
+	solution.projects[dirname] = { name: dirname, path: path.resolve(projectPath), guid: g };
+}
+
+function writeSolution(solution, path) {
+	var sln = `Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+`;
+	for (let p in solution.projects) {
+		let proj = solution.projects[p];
+		sln += `
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "${proj.name}", "${proj.path}", "{${proj.guid}}"
+EndProject`
+	}
+
+	sln += `
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution`;
+
+	for (let p in solution.projects) {
+		let proj = solution.projects[p];
+		sln += `
+		{${proj.guid}}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{${proj.guid}}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{${proj.guid}}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{${proj.guid}}.Release|Any CPU.Build.0 = Release|Any CPU`;
+	}
+
+	sln += `
+	EndGlobalSection
+EndGlobal`;
+
+	fs.writeFile(path, sln);
+}
+
+gulp.task('clean', function (done) {
 	rimraf('artifacts', done);
 });
 
-gulp.task('di', ['clean'], function() {
+gulp.task('di', ['clean'], function () {
 	var frameworks = [
 		["netstandard1.0"],
 		["netstandard1.1"],
@@ -72,7 +129,7 @@ gulp.task('di', ['clean'], function() {
 	createProjects('di', deps, frameworks);
 });
 
-gulp.task('mvc', ['clean'], function() {
+gulp.task('mvc', ['clean'], function () {
 	var frameworks = [
 		["net451"],
 		["net46"],
@@ -88,7 +145,7 @@ gulp.task('mvc', ['clean'], function() {
 	createProjects('mvc', deps, frameworks, imports);
 });
 
-gulp.task('ef', ['clean'], function() {
+gulp.task('ef', ['clean'], function () {
 	var frameworks = [
 		["net451"],
 		["net46"],
