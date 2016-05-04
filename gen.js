@@ -35,6 +35,10 @@ var frameworks = [
 	["net451", "net462", "netcoreapp1.0", "netstandard1.5"]
 ];
 
+var ignore = {
+	"Microsoft.AspNetCore.Mvc": ["netcore50"]
+};
+
 for (let f of frameworks) {
 	// copy the base obj
 	var projectBase = {};
@@ -49,6 +53,11 @@ for (let f of frameworks) {
 
 	for (let pkgs of packageSets) {
 		var firstPackageName = Object.keys(pkgs)[0];
+
+		if (ignore[firstPackageName] && ignore[firstPackageName].indexOf(folderName) >= 0) {
+			continue;
+		}
+
 		var dir = path.join("artifacts", firstPackageName, folderName);
 		mkdirp.sync(dir);
 
