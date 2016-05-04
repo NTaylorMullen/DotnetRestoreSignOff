@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+set -e
 echo "Generating project.json files"
 npm start
 
@@ -11,7 +11,9 @@ if [ ! -e $dotnet ]; then
 	curl https://raw.githubusercontent.com/dotnet/cli/rel/1.0.0/scripts/obtain/dotnet-install.sh | bash -s -- -i "$(pwd)/.dotnet" --version $version
 fi
 
+$dotnet --info
+
 echo "Running dotnet restore --verbosity error"
 $dotnet restore --verbosity error artifacts/
-
-echo "Done."
+rc=$?
+echo "Done. Restore exit code = $rc"

@@ -27,15 +27,21 @@ function createProjects(name, dependencies, frameworkSets, imports) {
 		var dir = path.join("artifacts", name, folderName);
 		mkdirp.sync(dir);
 
+		var dest = path.join(dir, "project.json");
 		// this is what will be actually written to project.json
 		var project = {
 			dependencies: {}
 		};
 
+		if (fs.existsSync(dest)) {
+			// when createProject is called multiple times. e.g. see 'ef' task
+			project = JSON.parse(fs.readFileSync(dest));
+		}
+
 		extend(true, project, projectBase);
 		extend(true, project.dependencies, dependencies);
 
-		fs.writeFileSync(path.join(dir, "project.json"), JSON.stringify(project, null, 2));
+		fs.writeFileSync(dest, JSON.stringify(project, null, 2));
 	}
 }
 
@@ -77,4 +83,38 @@ gulp.task('mvc', ['clean'], function() {
 	createProjects('mvc', deps, frameworks, imports);
 });
 
-gulp.task('default', ['di', 'mvc']);
+gulp.task('ef', ['clean'], function() {
+	var frameworks = [
+		["net451"],
+		["net46"],
+		["net462"],
+		["netcoreapp1.0"],
+		["netstandard1.3"],
+		["netstandard1.4"],
+		["netstandard1.5"],
+		["net451", "net462", "netcoreapp1.0", "netstandard1.5"]
+	];
+	var deps = {
+		"Microsoft.EntityFrameworkCore.Sqlite": "1.0.0-*",
+		"Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-*",
+	};
+	var imports = ["portable-net451+win8"];
+	createProjects('ef', deps, frameworks, imports);
+
+	var toolsFrameworks = [
+		["net451"],
+		["net46"],
+		["net462"],
+		["netcore50"],
+		["netcoreapp1.0"]
+	];
+	var toolsDeps = {
+		"Microsoft.EntityFrameworkCore.Tools": {
+			"type": "build",
+			"version": "1.0.0-*"
+		}
+	};
+	createProjects('ef', toolsDeps, toolsFrameworks, imports);
+});
+
+gulp.task('default', ['di', 'mvc', 'ef']);
