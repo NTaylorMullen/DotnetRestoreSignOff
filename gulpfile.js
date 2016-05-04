@@ -7,7 +7,7 @@ var fs = require('fs'),
 	rimraf = require('rimraf'),
 	gulp = require('gulp');
 
-function createProjects(name, dependencies, frameworkSets, imports) {
+function createProjects(name, dependencies, frameworkSets, imports, tools) {
 	for (let tfms of frameworkSets) {
 		// shared
 		var projectBase = {
@@ -30,7 +30,8 @@ function createProjects(name, dependencies, frameworkSets, imports) {
 		var dest = path.join(dir, "project.json");
 		// this is what will be actually written to project.json
 		var project = {
-			dependencies: {}
+			dependencies: {},
+			tools: {}
 		};
 
 		if (fs.existsSync(dest)) {
@@ -40,6 +41,10 @@ function createProjects(name, dependencies, frameworkSets, imports) {
 
 		extend(true, project, projectBase);
 		extend(true, project.dependencies, dependencies);
+
+		if (tools) {
+			extend(true, project.tools, tools);
+		}
 
 		fs.writeFileSync(dest, JSON.stringify(project, null, 2));
 	}
@@ -114,7 +119,13 @@ gulp.task('ef', ['clean'], function() {
 			"version": "1.0.0-*"
 		}
 	};
-	createProjects('ef', toolsDeps, toolsFrameworks, imports);
+	var tools = {
+		"Microsoft.EntityFrameworkCore.Tools": {
+			"imports": "portable-net451+win8",
+			"version": "1.0.0-*"
+		}
+	};
+	createProjects('ef', toolsDeps, toolsFrameworks, imports, tools);
 });
 
 gulp.task('default', ['di', 'mvc', 'ef']);
