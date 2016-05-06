@@ -149,7 +149,8 @@ gulp.task('mvc-portable-app', ['clean'], function () {
 		["net462"],
 		["netcoreapp1.0"],
 		["netstandard1.5"],
-		["net451", "net462", "netcoreapp1.0", "netstandard1.5"]
+		["net451", "net462", "netcoreapp1.0", "netstandard1.5"],
+		["net451", "netcoreapp1.0", "netstandard1.5"]
 	];
 	var frameworkDependencies = {
 		"netcoreapp1.0": {
@@ -211,7 +212,8 @@ gulp.task('mvc-standalone-app-win', ['clean'], function () {
 		["net462"],
 		["netcoreapp1.0"],
 		["netstandard1.5"],
-		["net451", "net462", "netcoreapp1.0", "netstandard1.5"]
+		["net451", "net462", "netcoreapp1.0", "netstandard1.5"],
+		["net451", "netcoreapp1.0", "netstandard1.5"]
 	];
 	var frameworkDependencies = {
 		"netcoreapp1.0": {
