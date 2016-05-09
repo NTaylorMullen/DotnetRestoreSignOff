@@ -124,145 +124,195 @@ gulp.task('clean', function (done) {
 	rimraf('artifacts', done);
 });
 
-// gulp.task('di', ['clean'], function () {
-// 	var frameworks = [
-// 		["netstandard1.0"],
-// 		["netstandard1.1"],
-// 		["netstandard1.2"],
-// 		["netstandard1.3"],
-// 		["netstandard1.4"],
-// 		["netstandard1.5"],
-// 		["netcore50"],
-// 		["netstandard1.0", "netstandard1.1", "netstandard1.2", "netstandard1.3", "netstandard1.4", "netstandard1.5", "netcore50"]
-// 	];
-
-// 	var deps = {
-// 		"Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*"
-// 	};
-// 	createProjects('di', deps, frameworks);
-// });
-
-gulp.task('mvc-portable-app', ['clean'], function () {
+gulp.task('di-portable-app', ['clean'], function () {
 	var frameworks = [
-		["net451"],
-		["net46"],
-		["net462"],
 		["netcoreapp1.0"],
+		// ["netstandard1.0"],
+		// ["netstandard1.1"],
+		// ["netstandard1.2"],
+		// ["netstandard1.3"],
+		// ["netstandard1.4"],
 		["netstandard1.5"],
-		["net451", "net462", "netcoreapp1.0", "netstandard1.5"],
-		["net451", "netcoreapp1.0", "netstandard1.5"]
+		["netcore50"],
+		// ["netstandard1.0", "netstandard1.1", "netstandard1.2", "netstandard1.3", "netstandard1.4", "netstandard1.5", "netcore50"]
+		["netstandard1.5", "netcoreapp1.0"]
 	];
-	var frameworkDependencies = {
-		"netcoreapp1.0": {
-			"Microsoft.NETCore.App": {
-				"type": "platform",
-				"version": "1.0.0-*"
-			}
-		},
-		"netstandard1.5": {
-			"Microsoft.NETCore.App": {
-				"type": "platform",
-				"version": "1.0.0-*"
-			}
-		}
-	}
+
 	var deps = {
-		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
+		"Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
+		"Microsoft.NETCore.App": {
+			"type": "platform",
+			"version": "1.0.0-*"
+		}
 	};
-	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
-	createProjects('mvc-portable-app', deps, frameworks, imports, null, frameworkDependencies);
+	createProjects('di-portable-app', deps, frameworks);
 });
 
-gulp.task('mvc-standalone-app-xplat', ['clean'], function () {
+gulp.task('di-standalone-app', ['clean'], function () {
 	var frameworks = [
 		["netcoreapp1.0"],
+		// ["netstandard1.0"],
+		// ["netstandard1.1"],
+		// ["netstandard1.2"],
+		// ["netstandard1.3"],
+		// ["netstandard1.4"],
 		["netstandard1.5"],
-		["netcoreapp1.0", "netstandard1.5"]
+		["netcore50"],
+		// ["netstandard1.0", "netstandard1.1", "netstandard1.2", "netstandard1.3", "netstandard1.4", "netstandard1.5", "netcore50"]
+		["netstandard1.5", "netcoreapp1.0"]
 	];
-	var frameworkDependencies = {
-		"netcoreapp1.0": {
-			"Microsoft.NETCore.App": {
-				"type": "platform",
-				"version": "1.0.0-*"
-			}
-		},
-		"netstandard1.5": {
-			"Microsoft.NETCore.App": {
-				"type": "platform",
-				"version": "1.0.0-*"
-			}
-		}
-	}
+
 	var deps = {
-		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
+		"Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
+		"Microsoft.NETCore.App": {
+			"version": "1.0.0-*"
+		}
 	};
 	var runtimes = {
 		"win7-x64": {},
 		"win7-x86": {},
 		"ubuntu.14.04-x64": {}
 	};
-	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
-	createProjects('mvc-standalone-app-xplat', deps, frameworks, imports, null, frameworkDependencies, runtimes);
+	createProjects('di-standalone-app', deps, frameworks, null, null, null, runtimes);
 });
 
-gulp.task('mvc-standalone-app-win', ['clean'], function () {
+gulp.task('di-library', ['clean'], function () {
 	var frameworks = [
-		["net451"],
-		["net46"],
-		["net462"],
-		["netcoreapp1.0"],
+		["netstandard1.0"],
+		["netstandard1.1"],
+		["netstandard1.2"],
+		["netstandard1.3"],
+		["netstandard1.4"],
 		["netstandard1.5"],
-		["net451", "net462", "netcoreapp1.0", "netstandard1.5"],
-		["net451", "netcoreapp1.0", "netstandard1.5"]
+		["netcore50"],
+		["netstandard1.0", "netstandard1.1", "netstandard1.2", "netstandard1.3", "netstandard1.4", "netstandard1.5", "netcore50"],
+		["netstandard1.5", "netcore50", "netcoreapp1.0"]
 	];
-	var frameworkDependencies = {
-		"netcoreapp1.0": {
-			"Microsoft.NETCore.App": {
-				"type": "platform",
-				"version": "1.0.0-*"
-			}
-		},
-		"netstandard1.5": {
-			"Microsoft.NETCore.App": {
-				"type": "platform",
-				"version": "1.0.0-*"
-			}
-		}
-	}
+
 	var deps = {
-		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
+		"Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-*",
+		"NETStandard.Library": "1.5.0-*"
 	};
-	var runtimes = {
-		"win7-x64": {},
-		"win7-x86": {}
-	};
-	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
-	createProjects('mvc-standalone-app-win', deps, frameworks, imports, null, frameworkDependencies, runtimes);
+	createProjects('di-library', deps, frameworks);
 });
 
-gulp.task('mvc-library', ['clean'], function () {
-	var frameworks = [
-		["net451"],
-		["net46"],
-		["net462"],
-		["netcoreapp1.0"],
-		["netstandard1.5"],
-		["net451", "net462", "netcoreapp1.0", "netstandard1.5"]
-	];
-	var frameworkDependencies = {
-		"netcoreapp1.0": {
-			"NETStandard.Library": "1.5.0-*"
-		},
-		"netstandard1.5": {
-			"NETStandard.Library": "1.5.0-*"
-		}
-	}
-	var deps = {
-		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
-	};
-	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
-	createProjects('mvc-library', deps, frameworks, imports, null, frameworkDependencies);
-});
+// gulp.task('mvc-portable-app', ['clean'], function () {
+// 	var frameworks = [
+// 		["net451"],
+// 		["net46"],
+// 		["net462"],
+// 		["netcoreapp1.0"],
+// 		["netstandard1.5"],
+// 		["net451", "net462", "netcoreapp1.0", "netstandard1.5"],
+// 		["net451", "netcoreapp1.0", "netstandard1.5"]
+// 	];
+// 	var frameworkDependencies = {
+// 		"netcoreapp1.0": {
+// 			"Microsoft.NETCore.App": {
+// 				"type": "platform",
+// 				"version": "1.0.0-*"
+// 			}
+// 		},
+// 		"netstandard1.5": {
+// 			"Microsoft.NETCore.App": {
+// 				"type": "platform",
+// 				"version": "1.0.0-*"
+// 			}
+// 		}
+// 	}
+// 	var deps = {
+// 		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
+// 	};
+// 	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
+// 	createProjects('mvc-portable-app', deps, frameworks, imports, null, frameworkDependencies);
+// });
+
+// gulp.task('mvc-standalone-app-xplat', ['clean'], function () {
+// 	var frameworks = [
+// 		["netcoreapp1.0"],
+// 		["netstandard1.5"],
+// 		["netcoreapp1.0", "netstandard1.5"]
+// 	];
+// 	var frameworkDependencies = {
+// 		"netcoreapp1.0": {
+// 			"Microsoft.NETCore.App": {
+// 				"version": "1.0.0-*"
+// 			}
+// 		},
+// 		"netstandard1.5": {
+// 			"Microsoft.NETCore.App": {
+// 				"version": "1.0.0-*"
+// 			}
+// 		}
+// 	}
+// 	var deps = {
+// 		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
+// 	};
+// 	var runtimes = {
+// 		"win7-x64": {},
+// 		"win7-x86": {},
+// 		"ubuntu.14.04-x64": {}
+// 	};
+// 	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
+// 	createProjects('mvc-standalone-app-xplat', deps, frameworks, imports, null, frameworkDependencies, runtimes);
+// });
+
+// gulp.task('mvc-standalone-app-win', ['clean'], function () {
+// 	var frameworks = [
+// 		["net451"],
+// 		["net46"],
+// 		["net462"],
+// 		["netcoreapp1.0"],
+// 		["netstandard1.5"],
+// 		["net451", "net462", "netcoreapp1.0", "netstandard1.5"],
+// 		["net451", "netcoreapp1.0", "netstandard1.5"]
+// 	];
+// 	var frameworkDependencies = {
+// 		"netcoreapp1.0": {
+// 			"Microsoft.NETCore.App": {
+// 				"version": "1.0.0-*"
+// 			}
+// 		},
+// 		"netstandard1.5": {
+// 			"Microsoft.NETCore.App": {
+// 				"version": "1.0.0-*"
+// 			}
+// 		}
+// 	}
+// 	var deps = {
+// 		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
+// 	};
+// 	var runtimes = {
+// 		"win7-x64": {},
+// 		"win7-x86": {}
+// 	};
+// 	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
+// 	createProjects('mvc-standalone-app-win', deps, frameworks, imports, null, frameworkDependencies, runtimes);
+// });
+
+// gulp.task('mvc-library', ['clean'], function () {
+// 	var frameworks = [
+// 		["net451"],
+// 		["net46"],
+// 		["net462"],
+// 		["netcoreapp1.0"],
+// 		["netstandard1.5"],
+// 		["net451", "net462", "netcoreapp1.0", "netstandard1.5"]
+// 	];
+// 	var frameworkDependencies = {
+// 		"netcoreapp1.0": {
+// 			"NETStandard.Library": "1.5.0-*"
+// 		},
+// 		"netstandard1.5": {
+// 			"NETStandard.Library": "1.5.0-*"
+// 		}
+// 	}
+// 	var deps = {
+// 		"Microsoft.AspNetCore.Mvc": "1.0.0-*",
+// 	};
+// 	var imports = ["portable-dnxcore50+net45+win8+wp8+wpa81"];
+// 	createProjects('mvc-library', deps, frameworks, imports, null, frameworkDependencies);
+// });
 
 // gulp.task('mvc-portable', ['clean'], function () {
 // 	var frameworks = [
@@ -325,4 +375,4 @@ gulp.task('mvc-library', ['clean'], function () {
 // });
 
 // gulp.task('default', ['di', 'mvc', 'ef']);
-gulp.task('default', ['mvc-portable-app', 'mvc-standalone-app-xplat', 'mvc-standalone-app-win', 'mvc-library']);
+gulp.task('default', ['di-portable-app', 'di-standalone-app', 'di-library']);
